@@ -1,4 +1,4 @@
-package io.alexandru;
+package io.alexandru.ppmtool;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
