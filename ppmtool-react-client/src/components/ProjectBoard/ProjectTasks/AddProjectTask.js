@@ -32,7 +32,6 @@ class AddProjectTask extends Component {
             priority: this.state.priority,
             status: this.state.status,
         };
-        //console.log(projectTask);
         this.props.createProjectTask(this.state.projectIdentifier, projectTask, this.props.history);
     }
     componentWillReceiveProps(nextProps) {

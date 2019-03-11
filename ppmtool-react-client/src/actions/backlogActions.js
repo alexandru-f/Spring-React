@@ -32,7 +32,8 @@ export const createProjectTask = (backlog_id, project_task, history) => async di
 //         history.push(`/projectBoard/${id}`)
 //     }
 // };
-export const getBacklog = (backlog_id, history) => async dispatch => {
+
+export const getBacklog = backlog_id => async dispatch => {
 
     try {
         const res = await axios.get(`/api/backlog/${backlog_id}`);
@@ -41,7 +42,21 @@ export const getBacklog = (backlog_id, history) => async dispatch => {
             payload: res.data
         });
     } catch (error) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: error.response.data
+        });
+    }
+};
+
+export const getProjectTask = (backlog_id, pt_id, history) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/backlog/${backlog_id}/${pt_id}`);
+        dispatch({
+            type: GET_PROJECT,
+            payload: res.data
+        });
+    } catch (error) {
         history.push("/dashboard");
     }
-
 };

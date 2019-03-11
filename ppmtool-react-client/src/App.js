@@ -24,7 +24,7 @@ class App extends Component {
             <Route exact path="/updateProject/:id" component={UpdateProject} />
             <Route exact path="/projectBoard/:id" component={ProjectBoard} />
             <Route exact path="/addprojectTask/:id" component={AddProjectTask} />
-            <Route exact path="/updateProjectTask/:id" component={UpdateProjectTask} />
+            <Route exact path="/updateProjectTask/:backlog_id/:id" component={UpdateProjectTask} />
           </div>
         </Router>
       </Provider>
