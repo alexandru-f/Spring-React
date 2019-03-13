@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-    GET_ERRORS, GET_PROJECT, GET_BACKLOG
+    GET_ERRORS, GET_PROJECT, GET_BACKLOG, DELETE_PROJECT_TASK,
 } from "./types";
 
 export const createProjectTask = (backlog_id, project_task, history) => async dispatch => {
@@ -36,11 +36,19 @@ export const createProjectTask = (backlog_id, project_task, history) => async di
 export const getBacklog = backlog_id => async dispatch => {
 
     try {
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        });
         const res = await axios.get(`/api/backlog/${backlog_id}`);
         dispatch({
             type: GET_BACKLOG,
             payload: res.data
         });
+        // dispatch({
+        //     type: GET_ERRORS,
+        //     payload: {}
+        // });
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
@@ -58,5 +66,32 @@ export const getProjectTask = (backlog_id, pt_id, history) => async dispatch => 
         });
     } catch (error) {
         history.push("/dashboard");
+    }
+};
+
+export const updateProjectTask = (backlog_id, pt_id, projectTask, history) => async dispatch => {
+    try {
+        await axios.patch(`/api/backlog/${backlog_id}/${pt_id}`, projectTask);
+        history.push(`/projectBoard/${backlog_id}`);
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        });
+    } catch (error) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: error.response.data
+        });
+    }
+};
+
+export const deleteProjectTask = (backlog_id, pt_id, history) => async dispatch => {
+
+    if (window.confirm("Are you sure? This will delete the project task!")) {
+        await axios.delete(`/api/backlog/${backlog_id}/${pt_id}`);
+        dispatch({
+            type: DELETE_PROJECT_TASK,
+            payload: pt_id
+        });
     }
 };

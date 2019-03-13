@@ -20,13 +20,15 @@ export const createProject = (project, history) => async dispatch => {
 };
 
 export const getProjects = () => async dispatch => {
-
+  dispatch({
+    type: GET_ERRORS,
+    payload: {}
+  });
   const res = await axios.get("/api/project/all");
   dispatch({
     type: GET_PROJECTS,
     payload: res.data
   });
-
 };
 
 export const getProject = (id, history) => async dispatch => {
@@ -51,5 +53,6 @@ export const deleteProject = id => async dispatch => {
     });
   }
 };
+
 
 

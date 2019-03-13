@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import { getProjectTask } from "../../../actions/backlogActions";
+import { getProjectTask, updateProjectTask } from "../../../actions/backlogActions";
 
 class UpdateProjectTask extends Component {
 
@@ -21,6 +21,8 @@ class UpdateProjectTask extends Component {
             projectIdentifier: "",
             errors: {}
         };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -62,19 +64,21 @@ class UpdateProjectTask extends Component {
             dueDate: this.state.dueDate,
             projectIdentifier: this.state.projectIdentifier
         };
-        this.props.createProject(newProject, this.props.history);
+        this.props.updateProjectTask(this.state.projectIdentifier, this.state.projectSequence, newProject, this.props.history);
     }
     render() {
+        const { errors } = this.props;
+        const { backlog_id } = this.props.match.params;
         return (
             <div className="add-PBI">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            {/* <Link to={`/projectBoard/`} className="btn btn-light">
-                        Back to Project Board
-                        </Link> */}
-                            <h4 className="display-4 text-center">Add /Update Project Task</h4>
-                            <p className="lead text-center">Project Name + Project Code</p>
+                            <Link to={`/projectBoard/${backlog_id}`} className="btn btn-light">
+                                Back to Project Board
+                            </Link>
+                            <h4 className="display-4 text-center">Update Project Task</h4>
+
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <input type="text"
@@ -83,36 +87,54 @@ class UpdateProjectTask extends Component {
                                         )}
                                         name="summary"
                                         placeholder="Project Task summary"
+                                        value={this.state.summary}
+                                        onChange={this.onChange}
                                     />
                                     {errors && (
                                         <div className="invalid-feedback">{errors.summary}</div>
                                     )}
                                 </div>
                                 <div className="form-group">
-                                    <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria"></textarea>
+                                    <textarea className="form-control form-control-lg"
+                                        placeholder="Acceptance Criteria"
+                                        name="acceptanceCriteria"
+                                        value={this.state.acceptanceCriteria}
+                                        onChange={this.onChange}
+                                    ></textarea>
                                 </div>
                                 <h6>Due Date</h6>
                                 <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="dueDate" />
+                                    <input type="date"
+                                        className="form-control form-control-lg"
+                                        name="dueDate"
+                                        value={this.state.dueDate || ""}
+                                        onChange={this.onChange}
+                                    />
                                 </div>
                                 <div className="form-group">
-                                    <select className="form-control form-control-lg" name="priority">
+                                    <select className="form-control form-control-lg"
+                                        name="priority"
+                                        value={this.state.priority}
+                                        onChange={this.onChange}
+                                    >
                                         <option value={0}>Select Priority</option>
                                         <option value={1}>High</option>
                                         <option value={2}>Medium</option>
                                         <option value={3}>Low</option>
                                     </select>
                                 </div>
-
                                 <div className="form-group">
-                                    <select className="form-control form-control-lg" name="status">
+                                    <select className="form-control form-control-lg"
+                                        name="status"
+                                        value={this.state.status}
+                                        onChange={this.onChange}
+                                    >
                                         <option value="">Select Status</option>
                                         <option value="TO_DO">TO DO</option>
                                         <option value="IN_PROGRESS">IN PROGRESS</option>
                                         <option value="DONE">DONE</option>
                                     </select>
                                 </div>
-
                                 <input type="submit" className="btn btn-primary btn-block mt-4" />
                             </form>
                         </div>
@@ -125,14 +147,17 @@ class UpdateProjectTask extends Component {
 
 UpdateProjectTask.propTypes = {
     getProjectTask: PropTypes.func.isRequired,
-    project: PropTypes.object.isRequired
+    project: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+    updateProjectTask: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    project: state.backlog.project_task
+    project: state.project.project,
+    errors: state.errors
 });
 
 export default connect(
     mapStateToProps,
-    { getProjectTask }
+    { getProjectTask, updateProjectTask }
 )(UpdateProjectTask);
