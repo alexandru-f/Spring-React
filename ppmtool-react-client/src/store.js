@@ -8,15 +8,16 @@ const middleWare = [thunk];
 
 let store;
 
+const ReactReduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
 //Make REDUX to work on Chrome
-if (window.navigator.userAgent.includes("Chrome")) {
+if (window.navigator.userAgent.includes("Chrome") && ReactReduxDevTools) {
   store = createStore(
     rootReducer,
     initialState,
     compose(
       applyMiddleware(...middleWare),
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION__()
+      ReactReduxDevTools
     )
   );
   //Make REDUX to work on other browsers
