@@ -27,8 +27,8 @@ class Header extends Component {
 
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link to="/dashboard" className="nav-link">
-            <i className="fas fa-user-circle mr-1">{user.fullName}</i>
+          <Link to={`/profile/${user.id}`} className="nav-link">
+            <i className="fa fa-user-circle mr-1"><span className="pdl-10">{user.fullName}</span></i>
           </Link>
         </li>
         <li className="nav-item">

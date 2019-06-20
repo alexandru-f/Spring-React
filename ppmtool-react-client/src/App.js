@@ -19,6 +19,9 @@ import setJWTToken from "./securityUtils/setJWTToken";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecuredRoute";
+import UserProfile from "./components/UserManagement/UserProfile";
+import ForgotPassword from "./components/UserManagement/ForgotPassword";
+import ResetPassword from "./components/UserManagement/ResetPassword";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -45,10 +48,11 @@ class App extends Component {
             {
               //Public Routes
             }
-
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path = "/login" component = {Login}/>
+            <Route exact path="/forgotPassword" component = {ForgotPassword} />
+            <Route path ="/resetPassword" component={ResetPassword} />
             {
               //Private Routes
             }
@@ -59,6 +63,7 @@ class App extends Component {
               <SecuredRoute exact path="/projectBoard/:id" component={ProjectBoard} />
               <SecuredRoute exact path="/addprojectTask/:id" component={AddProjectTask} />
               <SecuredRoute exact path="/updateProjectTask/:backlog_id/:id" component={UpdateProjectTask} />
+              <SecuredRoute exact path="/profile/:id" component={UserProfile} />
            </Switch>
           </div>
         </Router>

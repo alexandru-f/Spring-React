@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {SET_CURRENT_USER, GET_ERRORS } from './types';
+import {SET_CURRENT_USER, GET_ERRORS, GET_SUCCES_PASSCHANGE, RECOVER_PASSWORD_SUCCESS,RESET_PASSWORD_SUCCESS,GET_PASS_TOKEN, GET_SUCCESS_RESETPASS} from './types';
 import setJWTToken from '../securityUtils/setJWTToken';
 import jwt_decode from 'jwt-decode';
 
@@ -19,6 +19,21 @@ export const createNewUser = (newUser, history) => async dispatch => {
     }
 };
 
+export const clearErrors = () => async dispatch => {
+    dispatch({
+        type: GET_ERRORS,
+        payload: {}
+    });
+}
+export const clearIsRecoverPassOk = () => async dispatch => {
+    dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: false
+    });  
+};
+
+
+
 export const login = LoginRequest => async dispatch => {
     try {
     //post => Login request
@@ -37,6 +52,71 @@ export const login = LoginRequest => async dispatch => {
         payload: decoded
     });
     } catch(err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const changePassword = (changePassRequest, history) => async dispatch => {
+    try {
+        const res = await axios.post("/api/users/updatePassword", changePassRequest);
+        dispatch({
+            type: GET_SUCCES_PASSCHANGE,
+            payload: res.data
+        });
+    } catch(err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const recoverPassword = (recoverPasswordRequest) => async dispatch => {
+    try {
+        await axios.post("/api/users/forgotPassword", recoverPasswordRequest);
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        });
+        dispatch({
+            type: RECOVER_PASSWORD_SUCCESS,
+            isRecoverPassOk: true
+        });
+    } catch(err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const validateToken = (token) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/users/resetPassword?token=${token}`);
+        dispatch({
+            type: GET_PASS_TOKEN,
+            payload: res.data
+        });
+    } catch(err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const resetPassword = (resetPassRequest, token, history) => async dispatch => {
+    try {
+        await axios.post(`/api/users/resetPassword?token=${token}`, resetPassRequest);
+        history.push("/login");
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        });
+    } catch (err) {
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data

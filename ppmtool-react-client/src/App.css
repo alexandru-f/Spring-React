@@ -31,7 +31,6 @@ img {
 
 .landing {
     position: relative;
-    /* background: url("../img/showcase.jpg") no-repeat; */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -75,4 +74,110 @@ img {
 
 .fa {
     font-weight: 700;
+}
+.pdl-10 {
+    padding-left: 10px;
+}
+.account-page > div:nth-child(1) {
+    margin-top: 5em;
+}
+.account-page h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 0;
+    color: #1DB954;
+    margin-bottom: 30px;
+}
+.account-page h4 {
+    color: #919496;
+    font-weight: 400;
+    margin-bottom: 3px;
+}
+.account-page h1 {
+    font-size: 26px;
+    margin: .5em 0;
+    color: #1DB954;
+    font-weight: 400;
+}
+.account-page p {
+    padding-top: 2px;
+    padding-bottom: 17px;
+    font-weight: 500;
+    
+}
+.well {
+    padding: 40px!important;
+}
+.area-b0 {
+    margin-bottom:0!important;
+    padding-bottom: 0!important;
+}
+.account-wrapper {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.start-end-dates .col-6 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.start-end-dates {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 0;
+    color: #1DB954;
+    margin-bottom:0;
+}
+.start-date {
+    color: #1DB954;
+}
+.end-date {
+    color: red;
+}
+.start-end-dates p {
+    font-weight: 400;
+}
+.over-due {
+    padding: 0!important;
+    color: red;
+    font-weight: 700;
+}
+.fw-400 {
+    font-weight: 400!important;
+}
+.project-task table {
+    width: 100%;
+}
+.fa-plus-circle:before {
+    padding-right: 7px;
+}
+.overdue-project {
+    margin-bottom: 20px;
+}
+.password-success {
+    font-size: 24px;
+    margin: .5em 0;
+    color: #1DB954;
+    font-weight: 400;
+}
+.auth-form-body {
+    border-radius: 5px;
+    border: 1px solid #d8dee2;
+    border-radius: 0 0 3px 3px;
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+    border-top: 1px solid #d8dee2;
+    margin: 0 auto;
+}
+.auth-form-body h3 {
+    font-size: 16px;
+}
+.center-inline-btn {
+    display: block;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
 }

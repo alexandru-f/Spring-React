@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import classnames from 'classnames';
-import {login} from '../../actions/securityActions';
+import {login, clearErrors} from '../../actions/securityActions';
+import { Link } from "react-router-dom";
 
 class Login extends Component {
     constructor() {
@@ -16,13 +17,15 @@ class Login extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
     componentDidMount() {
-        if(this.props.security.validToken) {
+        if  (this.props.security.validToken) {
             this.props.history.push("/dashboard");
+        }
+        if (this.props.errors) {
+            this.props.clearErrors();
         }
     }
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
-
     }
 
     onSubmit(e) {
@@ -77,6 +80,9 @@ class Login extends Component {
                                     errors && (<div className="invalid-feedback">{errors.password}</div>)
                                 }
                             </div>
+                            <div className="forgot-password">
+                                <Link to="/forgotPassword">Forgot password?</Link>
+                            </div>
                             <input type="submit" className="btn btn-info btn-block mt-4" />
                         </form>
                     </div>
@@ -89,10 +95,11 @@ class Login extends Component {
 Login.propTypes = {
     login: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
-    security: PropTypes.object.isRequired
+    security: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
     security: state.security,
-    errors: state.errors
+    errors: state.errors,
 });
-export default connect(mapStateToProps, {login})(Login);
+export default connect(mapStateToProps, {login, clearErrors})(Login);
