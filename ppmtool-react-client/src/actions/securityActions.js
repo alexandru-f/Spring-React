@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {SET_CURRENT_USER, GET_ERRORS, GET_SUCCES_PASSCHANGE, RECOVER_PASSWORD_SUCCESS,RESET_PASSWORD_SUCCESS,GET_PASS_TOKEN, GET_SUCCESS_RESETPASS} from './types';
+import {SET_CURRENT_USER, GET_ERRORS, GET_SUCCES_PASSCHANGE, RECOVER_PASSWORD_SUCCESS,RESET_PASSWORD_SUCCESS,GET_PASS_TOKEN} from './types';
 import setJWTToken from '../securityUtils/setJWTToken';
 import jwt_decode from 'jwt-decode';
 
